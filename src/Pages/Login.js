@@ -7,6 +7,7 @@ const Login = () => {
     const [user,setUser] = useState("");
     const [pwd,setPwd] = useState("");
     const [errMsg,setErrMsg] = useState("");
+    const [success, setSuccess] = useState(false);
 
     useEffect(()=>{
         userRef.current.focus();
@@ -16,11 +17,18 @@ const Login = () => {
         setErrMsg("");
     },[user,pwd])
 
+    const handleSubmit = async (e) =>{
+        e.preventDefault()
+        setUser("");
+        setPwd("")
+
+    }
+
   return (
     <section>
     <p ref ={errRef} className ={errMsg ? "errMsg":"offscreen"}>{errMsg}</p>
     <h1>Sign in</h1>
-    <form>
+    <form onSubmit={handleSubmit}>
         <label htmlFor ="username">UserName:</label>
         <input
         type ="text"

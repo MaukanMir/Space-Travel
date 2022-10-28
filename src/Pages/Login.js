@@ -1,6 +1,11 @@
-import React, {useRef,useState,useEffect} from 'react'
+import React, {useRef,useState,useEffect, useContext} from 'react'
+import AuthContext from "../Context/AuthProvider.js"
+import "./Login.css"
+import axios from "../API/axios"
 
+const LOGIN_URL = "/auth"
 const Login = () => {
+    const {setAuth} = useContext(AuthContext);
     const userRef = useRef();
     const errRef = useRef();
 
@@ -19,13 +24,48 @@ const Login = () => {
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
-        setUser("");
-        setPwd("")
 
+        try{
+            const response = await axios.post(
+            LOGIN_URL, JSON.stringify({user,pwd}),{
+                headers: {"Context-Type":"application/json"},
+                withCredentials:true
+            }
+            );
+            console.log(JSON.stringify(response?.data));
+            const accessToken = response?.data?.accessToken;
+            const roles = response?.data?.roles;
+            setAuth({user,pwd,roles,accessToken});
+            setUser("");
+            setPwd("");
+            setSuccess(true);
+        }catch(err){
+            if(!err?.response){
+                setErrMsg("No server response")
+            }else if(err.response?.status ===400){
+                setErrMsg("Missing username or password")
+            }else if(err.response?.status === 401){
+                setErrMsg("Unauthorized")
+            }else{
+                setErrMsg("Login failed");
+            }
+            errRef.current.focus();
+        }
     }
 
   return (
-    <section>
+
+    <>
+    {success ? (
+            <section>
+                <h1>You Are logged in!</h1>
+                <br/>
+                <p>
+                    <a href ="#"> Go to Home</a>
+                </p>
+            </section>
+    ):(
+    <section className ="main">
     <p ref ={errRef} className ={errMsg ? "errMsg":"offscreen"}>{errMsg}</p>
     <h1>Sign in</h1>
     <form onSubmit={handleSubmit}>
@@ -56,6 +96,8 @@ const Login = () => {
         </p>
     </form>
     </section>
+)}
+    </>
   )
 }
 

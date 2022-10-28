@@ -5,7 +5,7 @@
     background-color: whitesmoke;
     padding:20px;
     margin:auto;
-    background-image: url("/Users/test/Documents/React-Projects/space-travel/space/src/Components/Images/space-navbar.jpg");
+    background-image: url("./Images/space-navbar.jpg");
     border: 5px solid white;
 }
 

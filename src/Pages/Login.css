@@ -1,14 +1,13 @@
 
-.main{
+.login-main{
     display: flex;
     flex-direction: column;
     background-color: black;
     background-image: url("https://images.pexels.com/photos/2706654/pexels-photo-2706654.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") ;
     color:whitesmoke;
-    justify-content: center;
     align-items: center;
     font-size: 2rem;
-    opacity: 80%;
+    
 
 }
 
@@ -19,14 +18,27 @@ h1{
 
 }
 
-form{
+.form-base{
     display: flex;
+    justify-content: space-between;
     flex-direction: column;
-    justify-content: space-around;
-    padding:40px;
+    margin: 10px;
+    padding: 10px;
 }
 
-form > input{
+.form-button{
     display:flex;
-    font-size: 2rem;
+    justify-content: center;
+    align-items: center;
+    border-radius:5%;
+    margin: 10px;
+    background-color: black;
+    color:white;
+    padding:5px;
 }
+
+.form-button:hover{
+    color:maroon;
+}
+
+

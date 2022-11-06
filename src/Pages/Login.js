@@ -1,7 +1,7 @@
 import React, {useRef,useState,useEffect, useContext} from 'react'
 import "./Login.css"
 import axios from "../API/axios"
-const LOGIN_URL = "/auth"
+
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -16,17 +16,21 @@ const Login = () => {
 return (
     <div className ="login-main">
     <h1>Login</h1>
-    <form className="form-base" onSubmit ={handleSubmit}>
-        <label> Email </label>
-        <input type="text"
+    <form className="form-base"  onSubmit ={handleSubmit}>
+        <label className ="label-login">Email</label>
+        <input
+        className ="login-form"
+        type="text"
         required
         placeholder='Email'
         value = {email}
         onChange={(e)=> setEmail(e.target.value)}
         />
         
-        <label> Password </label>
-        <input type="password"
+        <label className ="label-login">Password</label>
+        <input
+        className ="login-form"
+        type="password"
         value ={password}
         required
         placeholder='Password'
@@ -34,6 +38,7 @@ return (
         />
     <button className ="form-button">Sign In Here</button>
     </form>
+
     
     </div>
 )

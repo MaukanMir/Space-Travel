@@ -7,9 +7,12 @@ const dotenv = require("dotenv")
 const PORT = process.env.PORT || 3500;
 dotenv.config();
 
-const multer = require("multer")
+const multer = require("multer");
+const path = require("path");
+
 
 app.use(express.json())
+app.use("/images", express.static(path.join(__dirname,"/images")))
 
 //  Routes
 const userRoute = require("./routes/user")
@@ -21,12 +24,14 @@ const categoriesRoute = require("./routes/categories");
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser:true,
     useUnifiedTopology: true,
+    // useFindAndModify:true,
 }).then(console.log("Connected to MongoDB")).catch((err)=> console.log(err));
 
 const storage = multer.diskStorage({
     destination:(req,file,cb)=>{
         cb(null,"images")
-    },filename:(req,file,cb)=>{
+    },
+    filename:(req,file,cb)=>{
         cb(null,req.body.name)
     }
 });

@@ -29,9 +29,9 @@ router.post("/register", async (req,res)=>{
 router.post("/login", async (req,res)=>{
     try{
         const user = await User.findOne({username:req.body.username});
-        !user && res.status(400).json("Sorry fam credentials");
+        !user && res.status(400).json("Wrong credentials");
         const validate = bcrypt.compare(req.body.password,user.password);
-        !validate && res.status(400).json("Sorry fam Wrong credentials");
+        !validate && res.status(400).json("Sorry Wrong credentials");
 
 
         const {password,...others} = user._doc

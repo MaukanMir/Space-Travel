@@ -1,47 +1,60 @@
-import React, {useRef,useState,useEffect, useContext} from 'react'
 import "./Login.css"
-import axios from "../API/axios"
 
+import { useRef,useContext } from "react"
+import { Context } from "../Context/Context";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password,setPassword] = useState("");
 
-    const handleSubmit = (e)=>{
-        e.preventDefault()
-        console.log(email)
-        console.log(password)
+  const userRef = useRef();
+  const usePasswordRef = useRef();
+  const {dispatch, isFetching } = useContext(Context);
+
+  const  handleSubmit = async (e)=>{
+    e.preventDefault();
+    dispatch({type:"LOGIN_START"});
+
+    try{
+      const response = await axios.post("/auth/login", {
+            username: userRef.current.value,
+            password: usePasswordRef.current.value,
+      })
+      dispatch({type:"LOGIN_SUCCESS", payload:response.data});
+      console.log(response)
+    }catch(err){
+      dispatch({type:"LOGIN_FAILURE"});
+      console.log(err)
     }
+  }
 
-return (
-    <div className ="login-main">
-    <h1>Login</h1>
-    <form className="form-base"  onSubmit ={handleSubmit}>
-        <label className ="label-login">Email</label>
-        <input
-        className ="login-form"
-        type="text"
-        required
-        placeholder='Email'
-        value = {email}
-        onChange={(e)=> setEmail(e.target.value)}
-        />
-        
-        <label className ="label-login">Password</label>
-        <input
-        className ="login-form"
-        type="password"
-        value ={password}
-        required
-        placeholder='Password'
-        onChange={(e)=> setPassword(e.target.value)}
-        />
-    <button className ="form-button">Sign In Here</button>
-    </form>
 
-    
+
+  return (
+    <div className ="login">
+        <span className="loginTitle">Login</span>
+        <form className ="loginForm" onSubmit={handleSubmit}>
+            <label>Username</label>
+            <input
+            className ="loginInput"
+            type="text"
+            placeholder ="Enter your username"
+            ref={userRef}
+            />
+            <label>Password</label>
+            <input
+            className ="loginInput"
+            type="password"
+            placeholder ="Enter your password"
+            ref={usePasswordRef}
+            />
+            <button className="loginButton" type="submit" disabled={isFetching}>Login</button>
+        </form>
+        <button className="loginRegisterButton">
+          <Link className ="link" to="/register"> Register </Link>
+          </button>
     </div>
-)
+  )
 }
 
 export default Login

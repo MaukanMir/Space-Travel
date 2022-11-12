@@ -2,7 +2,6 @@ const router = require("express").Router();
 const User = require("../models/Users");
 const Posts = require("../models/Post");
 const bcrypt = require("bcrypt");
-const { get } = require("mongoose");
 
 //UPDATE INFORMATION
 

@@ -1,5 +1,5 @@
 const router = require("express").Router();
-
+const User = require("../models/Users");
 const Post = require("../models/Post");
 
 
@@ -100,7 +100,7 @@ router.get("/", async (req,res)=>{
     try{
         let posts;
         if(username){
-            posts = await Post.find({username:username});
+            posts = await Post.find({username});
         }else if(category){
             posts = await Post.find({categories:{
                 $in:[category]

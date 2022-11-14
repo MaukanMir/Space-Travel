@@ -15,7 +15,7 @@ app.use(express.json())
 app.use("/images", express.static(path.join(__dirname,"/images")))
 
 //  Routes
-const userRoute = require("./routes/user")
+const userRoute = require("./routes/users")
 const authRoute = require("./routes/auth")
 const postRoute = require("./routes/posts");
 const categoriesRoute = require("./routes/categories");
@@ -24,7 +24,6 @@ const categoriesRoute = require("./routes/categories");
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser:true,
     useUnifiedTopology: true,
-    // useFindAndModify:true,
 }).then(console.log("Connected to MongoDB")).catch((err)=> console.log(err));
 
 const storage = multer.diskStorage({

@@ -19,7 +19,7 @@ import { Context } from '../Context/Context';
       title,
       desc,
     }
-    
+    console.log(file)
     if(file){
       const data = new FormData();
       const filename = Date.now() + file.name;
@@ -30,13 +30,17 @@ import { Context } from '../Context/Context';
         await axios.post("/upload",data)
       }catch(err){
         console.log(err)
+        
 
       }
     }
     try{
       const res = await axios.post("/posts",newPost);
       window.location.replace("/post/"+res.data._id);
-    }catch(err){console.log(err)}
+      
+    }catch(err){
+      console.log(err) 
+      console.log("right here")}
     
   }
 
